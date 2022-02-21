@@ -1,8 +1,6 @@
 import React from "react";
 import Feature from "../components/Feature";
-
 import { features } from "../utils/constantes";
-
 
 const HomePage = () => (
     <main>
