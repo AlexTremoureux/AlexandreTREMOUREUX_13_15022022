@@ -1,28 +1,20 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { selectLogged, selectToken } from "../app/selectors";
-import { store } from "../app/store";
 import Feature from "../components/Feature";
+import { useAppSelector } from "../hooks/store";
 import { features } from "../utils/constantes";
 
 const HomePage = () => {
-  const Token = useSelector(selectToken);
-  console.log(Token.token)
-  const Logged = useSelector(selectLogged)
-  const { logged } = Logged;
-  store.subscribe(
-    // cette fonction sera exécutée à chaque fois que le state change
-    () => {
-        const state = store.getState();
-        console.log(state);
-    }
-);
-  
-  console.log(logged)
-  //const {loading, error, data} = useFetchUserData(token)
-  return(
+  const valueToken = useAppSelector((state) => state.token)
+  console.log(valueToken.token)
+  const logged = useAppSelector((state) => state.logged);
+  console.log(logged.logged)
+/*
+  const { isLoading, error, data } = useFetchUserData(token);
+
+  if (isLoading) <div>Chargement en cours</div>;
+  if (error) <div>Une erreur est survenue</div>;
+*/
+  return (
     <main>
-      {console.log(store.getState())}
       <div className="hero">
         <section className="hero-content">
           <h2 className="sr-only">Promoted Content</h2>
@@ -32,7 +24,7 @@ const HomePage = () => {
           <p className="text">Open a savings account with Argent Bank today!</p>
         </section>
       </div>
-  
+
       <section className="features">
         <h2 className="sr-only">Features</h2>
         {features.map((feature) => (
@@ -46,6 +38,6 @@ const HomePage = () => {
       </section>
     </main>
   );
-}
+};
 
 export default HomePage;

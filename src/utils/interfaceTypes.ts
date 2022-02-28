@@ -15,10 +15,4 @@ export interface userProfileInformation {
   lastName: string;
   id: string;
 }
-export const initProfile: userProfileInformation = {
-  email: "",
-  password: "",
-  firstName: "",
-  lastName: "",
-  id: "",
-};
+
