@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import tokenReducer from '../app/features/tokenSlice'
 import loggedReducer from '../app/features/loggedSlice'
+import userProfileReducer from '../app/features/userProfileSlice'
 import { apiSlice } from './features/userSlice';
 
 
@@ -8,7 +9,8 @@ export const store = configureStore({
   reducer: {
     token: tokenReducer,
     logged: loggedReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer
+    userProfile: userProfileReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(apiSlice.middleware)

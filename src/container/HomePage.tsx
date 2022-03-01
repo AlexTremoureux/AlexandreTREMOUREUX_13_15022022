@@ -1,19 +1,7 @@
 import Feature from "../components/Feature";
-import { useAppSelector } from "../hooks/store";
 import { features } from "../utils/constantes";
 
-const HomePage = () => {
-  const valueToken = useAppSelector((state) => state.token)
-  console.log(valueToken.token)
-  const logged = useAppSelector((state) => state.logged);
-  console.log(logged.logged)
-/*
-  const { isLoading, error, data } = useFetchUserData(token);
-
-  if (isLoading) <div>Chargement en cours</div>;
-  if (error) <div>Une erreur est survenue</div>;
-*/
-  return (
+const HomePage = () => (
     <main>
       <div className="hero">
         <section className="hero-content">
@@ -38,6 +26,5 @@ const HomePage = () => {
       </section>
     </main>
   );
-};
 
 export default HomePage;
