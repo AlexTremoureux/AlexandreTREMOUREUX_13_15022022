@@ -1,4 +1,4 @@
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-typescript.svg)](https://forthebadge.com) [![forthebadge](/built-with-react.svg)] [![forthebadge](/use-redux.svg)]
+[![forthebadge](https://forthebadge.com/images/badges/made-with-typescript.svg)](https://forthebadge.com) ![forthebadge](/built-with-react.svg) ![forthebadge](/use-redux.svg) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) 
 
 # Project 13 - Utilisez une API pour un compte utilisateur bancaire avec React
 
