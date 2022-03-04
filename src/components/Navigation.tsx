@@ -8,7 +8,6 @@ import NavLink from "./NavLink";
 
 const Navigation = () => {
   const isLogged:boolean = useAppSelector((state) => state.logged);
-  
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userProfile = useAppSelector((state) => state.userProfile)
@@ -30,11 +29,11 @@ const Navigation = () => {
       <Logo />
       {isLogged ? (
         <div>
-          <a onClick={handleProfile} href="/">
+          <a onClick={handleProfile} >
             <i className="fa fa-user-circle"></i>
             {firstName}
           </a>
-          <a className="main-nav-item" onClick={handleLogOut} href="/">
+          <a className="main-nav-item" onClick={handleLogOut} >
             <i className="fa fa-sign-out"></i>
             Log out
           </a>

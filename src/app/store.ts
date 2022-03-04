@@ -2,7 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import tokenReducer from '../app/features/tokenSlice'
 import loggedReducer from '../app/features/loggedSlice'
 import userProfileReducer from '../app/features/userProfileSlice'
-import { apiSlice } from './features/userSlice';
+import { apiSlice } from './services/userSlice';
 
 
 export const store = configureStore({

@@ -1,62 +1,30 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-
 import { logged } from "../app/features/loggedSlice";
 import { tokenCreate } from "../app/features/tokenSlice";
-import { useLoginMutation } from "../app/features/userSlice";
-
-interface LoginRequest {
-  email: string;
-  password: string;
-}
+import { useLoginMutation } from "../app/services/userSlice";
+import { LoginRequest, UserResponse } from "../utils/interfaceTypes";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [login] = useLoginMutation();
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState(false);
   const [formState, setFormState] = useState<LoginRequest>({
     email: "",
     password: "",
   });
-
+  const handleClick = () => setShow(!show);
   const handleChange = ({
     target: { name, value },
-  }: React.ChangeEvent<HTMLInputElement>) => setFormState((prev) => {
-    console.log({[name]: value})
-    return({ ...prev, [name]: value })});
-  ;
-  const [show, setShow] = React.useState(false)
-  const handleClick = () => setShow(!show)
-  const [error, setError] = useState(false);
-  const [login] = useLoginMutation()
-
+  }: React.ChangeEvent<HTMLInputElement>) =>
+    setFormState((prev) => {
+      return { ...prev, [name]: value };
+    });
   const handleSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
-    
-    /*fetch("http://localhost:3001/api/v1/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formState),
-    })
-      .then(async (response) => {
-        const data = await response.json();
-        if (response.ok) {
-          console.log(data);
-          setError(false);
-          dispatch(tokenCreate(data.body.token))
-          dispatch(logged(true))
-          navigate("/profile");
-        } else {
-          console.error(response);
-          setError(true);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(error.toString());
-      });*/
   };
 
   return (
@@ -65,10 +33,6 @@ const SignIn = () => {
         <i className="fa fa-user-circle sign-in-icon" />
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
-          {/*inputList.map((input,index) => (
-            <Input key={input.label+index} label={input.label} type={input.type} />
-          ))*/}
-
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
             <input
@@ -84,12 +48,11 @@ const SignIn = () => {
               Password
             </label>
             <input
-              type={show ? 'text' : 'password'}
+              type={show ? "text" : "password"}
               id="password"
               autoComplete="on"
               name="password"
               onChange={handleChange}
-              
             />
             <i className="bi bi-eye-slash" onClick={handleClick}></i>
           </div>
@@ -104,16 +67,19 @@ const SignIn = () => {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button className="sign-in-button" onClick={async () => {
-            try {
-              const data = await login(formState).unwrap()
-              dispatch(tokenCreate(data.body.token))
-              dispatch(logged(true))
-              navigate('/profile')
-            } catch (err) {
-              setError(true)
-            }
-          }} >
+          <button
+            className="sign-in-button"
+            onClick={async () => {
+              try {
+                const data:UserResponse = await login(formState).unwrap();
+                dispatch(tokenCreate(data.body.token));
+                dispatch(logged(true));
+                navigate("/profile");
+              } catch (err) {
+                setError(true);
+              }
+            }}
+          >
             Sign In
           </button>
         </form>

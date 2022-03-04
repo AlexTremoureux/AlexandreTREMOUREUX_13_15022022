@@ -1,16 +1,17 @@
-// user status
-export interface userLoginStatus {
-  isLogged: boolean;
-  token: string;
-}
-
 // user profile
-export interface userProfileInformation {
-  email: string;
+export interface userProfile {
   firstName: string;
   lastName: string;
-  createdAt: string;
-  updatedAt: string;
-  id: string;
+}
+export type Headers = string;
+
+export interface UserResponse {
+  status: userProfile;
+  message: string;
+  body: any;
 }
 
+export interface LoginRequest {
+  email: string;
+  password: string;
+}

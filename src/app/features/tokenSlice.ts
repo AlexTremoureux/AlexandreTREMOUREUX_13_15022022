@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface tokenValue {
-  token: string;
-}
-
-const initialState: tokenValue = {
-  token: "",
-};
+const initialState: string = ""
 export const tokenSlice = createSlice({
   // le nom du slice
   name: "token",
@@ -15,12 +9,12 @@ export const tokenSlice = createSlice({
   // reducers permet de définir les actions et le reducer
   reducers: {
     // l'action tokenCreate ('token/tokenCreate')
-    tokenCreate: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+    tokenCreate: (state: string, action: PayloadAction<string>) => {
+      return action.payload;
     },
     // l'action tokenDelete ('token/tokenDelete')
-    tokenDelete: (state) => {
-      state.token = "";
+    tokenDelete: (state: string) => {
+      state = "";
     },
   },
 });
