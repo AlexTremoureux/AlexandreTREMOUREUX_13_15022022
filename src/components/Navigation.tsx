@@ -1,27 +1,21 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { logged } from "../app/features/loggedSlice";
 import { tokenDelete } from "../app/features/tokenSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import Logo from "./Logo";
-import NavLink from "./NavLink";
+import NavigationLink from "./NavigationLink";
+
 
 const Navigation = () => {
   const isLogged:boolean = useAppSelector((state) => state.logged);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userProfile = useAppSelector((state) => state.userProfile)
   const {firstName} = userProfile
-  const handleProfile = (event: React.SyntheticEvent) => {
-  event.preventDefault()
-    navigate("/profile");
-  };
 
-  const handleLogOut = (event: React.SyntheticEvent) => {
-    event.preventDefault()
+  const handleLogOut = () => {
     dispatch(tokenDelete());
     dispatch(logged(false));
-    navigate("/");
   };
 
   return (
@@ -29,18 +23,19 @@ const Navigation = () => {
       <Logo />
       {isLogged ? (
         <div>
-          <a onClick={handleProfile} >
-            <i className="fa fa-user-circle"></i>
-            {firstName}
-          </a>
-          <a className="main-nav-item" onClick={handleLogOut} >
+          <NavigationLink 
+            route={"/profile"}
+            icon={"fa fa-user-circle"}
+            name={firstName}
+          />
+          <NavLink className="main-nav-item" onClick={handleLogOut} to={"/"} >
             <i className="fa fa-sign-out"></i>
             Log out
-          </a>
+          </NavLink>
         </div>
       ) : (
         <div>
-          <NavLink
+          <NavigationLink
             route={"/login"}
             icon={"fa fa-user-circle"}
             name={"Sign In"}

@@ -14,7 +14,7 @@ const User = () => {
   const userProfile = useAppSelector((state) => state.userProfile);
   const { firstName, lastName } = userProfile;
   const [changingProfile, setChangingProfile] = useState(false);
-  const [updateProfile] = useUpdateProfileMutation()
+  const [updateProfile] = useUpdateProfileMutation();
 
   const [nameState, setNameState] = useState<userProfile>({
     firstName: firstName,
@@ -33,39 +33,45 @@ const User = () => {
       {changingProfile ? (
         <div className="header">
           <h1>Welcome back</h1>
-          <input
-            type="text"
-            placeholder={firstName}
-            name="firstName"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder={lastName}
-            name="lastName"
-            onChange={handleChange}
-          />
-          <button
-            type="submit"
-            onClick={async () => {
-              try {
-                const data:UserResponse = await updateProfile(nameState).unwrap()
-                dispatch(setUserProfileInformations(data.body));
+          <div className="editNameInput">
+            <input
+              type="text"
+              placeholder={firstName}
+              name="firstName"
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              placeholder={lastName}
+              name="lastName"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="editNameConfirmation">
+            <button
+              type="submit"
+              onClick={async () => {
+                try {
+                  const data: UserResponse = await updateProfile(
+                    nameState
+                  ).unwrap();
+                  dispatch(setUserProfileInformations(data.body));
+                  setChangingProfile(false);
+                } catch (err) {
+                  console.log(err);
+                }
+              }}
+            >
+              Save
+            </button>
+            <button
+              onClick={() => {
                 setChangingProfile(false);
-              } catch (err) {
-                console.log(err);
-              }
-            }}
-          >
-            Save
-          </button>
-          <button
-            onClick={() => {
-              setChangingProfile(false);
-            }}
-          >
-            Cancel
-          </button>
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       ) : (
         <div className="header">
