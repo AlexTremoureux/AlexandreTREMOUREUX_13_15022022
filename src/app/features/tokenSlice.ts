@@ -8,8 +8,8 @@ export const tokenSlice = createSlice({
   initialState,
   // reducers permet de définir les actions et le reducer
   reducers: {
-    // l'action tokenCreate ('token/tokenCreate')
-    tokenCreate: (state: string, action: PayloadAction<string>) => {
+    // l'action tokenCreate ('token/setToken')
+    setToken: (state: string, action: PayloadAction<string>) => {
       return action.payload;
     },
     // l'action tokenDelete ('token/tokenDelete')
@@ -19,5 +19,5 @@ export const tokenSlice = createSlice({
   },
 });
 
-export const { tokenCreate, tokenDelete } = tokenSlice.actions;
+export const { setToken, tokenDelete } = tokenSlice.actions;
 export default tokenSlice.reducer;

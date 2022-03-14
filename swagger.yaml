@@ -127,11 +127,13 @@ paths:
         name: Authorization
         description: Attach Bearer JWT
         required: true
+        schema:
+            $ref: '#/definitions/Account'
       responses:
         '200':
           description: User profile retrieved successfully
           schema:
-            $ref: '#/definitions/Account'
+            $ref: '#/definitions/AccountResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -158,11 +160,13 @@ paths:
         description: TransactionId to fetch
         required: true
         type: string
+        schema:
+            $ref: '#/definitions/TransactionDetails'
       responses:
         '200':
           description: Transaction retrieved successully
           schema:
-            $ref: "#/definitions/TransactionDetails"
+            $ref: "#/definitions/TransactionDetailsResponse"
         '400':
           description: Invalid Fields
         '500':
@@ -184,7 +188,7 @@ paths:
         required: true
       - in: path
         name: TransactionId
-        description: TransactionId to fetch
+        description: TransactionId to update
         required: true
         type: string
       - in: body
@@ -192,8 +196,12 @@ paths:
         description: Update Transaction attributes 
         required: true
         schema:
-          $ref: "#/definitions/Transaction"
+          $ref: "#/definitions/TransactionDetails"
       responses:
+        '200':
+          description: Transaction edited successfully
+          schema:
+            $ref: "#/definitions/TransactionDetailsResponse"
         "400":
           description: Invalid Fields
         "500":
@@ -263,6 +271,24 @@ definitions:
       AccountID:
         type: string
       TransactionID:
+        type: string
+      TransactionType:
+        type: string
+      Category:
+        type: string
+      Notes:
+        type: string
+      body:
+        $ref: "#/definitions/Transaction"
+
+  TransactionsResponse:
+    type: object
+    properties:
+      AccountID:
+        type: string
+      TransactionID:
+        type: string
+      TransactionType:
         type: string
       Category:
         type: string
