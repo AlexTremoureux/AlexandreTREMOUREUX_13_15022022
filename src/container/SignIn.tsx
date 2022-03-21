@@ -12,6 +12,8 @@ const SignIn = () => {
   const [login] = useLoginMutation();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const emailStorage:string|null = localStorage.getItem("email")
+  const emailValueRecorded:string = emailStorage!==null ? emailStorage : ""
   const [error, setError] = useState(false);
   const [rememberMe, setRememberMe] = useState(false)
   const [formState, setFormState] = useState<LoginRequest>({
@@ -34,11 +36,9 @@ const SignIn = () => {
         dispatch(setToken(data.body.token));
         dispatch(logged(true));
         if (rememberMe) {
-          localStorage.setItem("Bearer", data.body.token);
-          localStorage.setItem("isLogged", "true");
+          localStorage.setItem("email", formState.email);
         }
-        sessionStorage.setItem("Bearer", data.body.token);
-        sessionStorage.setItem("isLogged", "true");
+        localStorage.setItem("Bearer", data.body.token);
         navigate("/profile");
       } catch (err) {
         setError(true);
@@ -61,6 +61,7 @@ const SignIn = () => {
               name="email"
               autoComplete="on"
               ref={emailRef}
+              defaultValue={emailValueRecorded}
             />
           </div>
           <div className="input-wrapper">

@@ -16,8 +16,8 @@ export const loggedSlice = createSlice({
 })
 
 // on extrait les actions et le reducer
-const { actions, reducer } = loggedSlice
-// on export chaque action individuellement
-export const { logged } = actions
+//const { actions, reducer } = loggedSlice
+// on export logged
+export const { logged } = loggedSlice.actions
 // on export le reducer comme default export
-export default reducer
+export default loggedSlice.reducer

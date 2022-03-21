@@ -1,7 +1,13 @@
+import { useDispatch } from "react-redux";
+import { logged } from "../app/features/loggedSlice";
 import Feature from "../components/Feature";
 import { features } from "../utils/constantes";
 
-const HomePage = () => (
+const HomePage = () => {
+  const dispatch = useDispatch()
+  const isLogged = localStorage.getItem("Bearer") !== null;
+  if (isLogged) dispatch(logged(true));
+  return (
     <main>
       <div className="hero">
         <section className="hero-content">
@@ -26,5 +32,6 @@ const HomePage = () => (
       </section>
     </main>
   );
+};
 
 export default HomePage;

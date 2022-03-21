@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/store";
 import { userProfile } from "../../utils/interfaceTypes";
 
 const slice = createSlice({
@@ -26,4 +25,3 @@ const slice = createSlice({
 
 export const { setUserProfileInformations } = slice.actions;
 export default slice.reducer;
-export const selectCurrentUser = (state: RootState) => state.token;

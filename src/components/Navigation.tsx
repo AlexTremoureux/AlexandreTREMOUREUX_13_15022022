@@ -2,25 +2,26 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logged } from "../app/features/loggedSlice";
 import { setToken } from "../app/features/tokenSlice";
+import { selectCurrentUser, selectLogged } from "../app/selectors";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { userProfile } from "../utils/interfaceTypes";
 import Logo from "./Logo";
 import NavigationLink from "./NavigationLink";
 
 
 const Navigation = () => {
   const navigate = useNavigate()
-  const isLogged:boolean = useAppSelector((state) => state.logged);
   const dispatch = useAppDispatch();
-  const userProfile = useAppSelector((state) => state.userProfile)
+  const isLogged:boolean = useAppSelector(selectLogged);
+  const userProfile:userProfile = useAppSelector(selectCurrentUser)
   const {firstName} = userProfile
 
   const handleLogOut = (event: React.SyntheticEvent): void => {
     event.preventDefault()
     dispatch(setToken(""));
     dispatch(logged(false));
-    sessionStorage.clear()
+    localStorage.removeItem('Bearer')
     navigate("/")
-
   };
 
   return (

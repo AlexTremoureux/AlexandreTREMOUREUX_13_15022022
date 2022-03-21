@@ -4,6 +4,7 @@ export interface userProfile {
   lastName: string;
 }
 export type Headers = string;
+export type Boolean = boolean;
 
 export interface UserResponse {
   status: userProfile;

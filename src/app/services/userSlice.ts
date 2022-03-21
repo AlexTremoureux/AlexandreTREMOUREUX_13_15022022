@@ -14,11 +14,9 @@ export const apiSlice = createApi({
       // By default, if we have a token in the store, let's use that for authenticated requests
       //const token: string = (getState() as RootState).token;
       const tokenLocalStorage = localStorage.getItem("Bearer");
-      const tokenSessionStorage = sessionStorage.getItem("Bearer");
-      const rememberMeIsActive = tokenLocalStorage!==null
-      const token = rememberMeIsActive? tokenLocalStorage : tokenSessionStorage
-      console.log(rememberMeIsActive);
-      
+      //const tokenSessionStorage = sessionStorage.getItem("Bearer");
+      //const rememberMeIsActive = tokenLocalStorage!==null
+      const token = tokenLocalStorage
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
