@@ -32,9 +32,6 @@ export const apiSlice = createApi({
         body: credentials,
       }),
     }),
-    protected: builder.mutation<{ message: string }, void>({
-      query: () => "protected",
-    }),
     profile: builder.mutation<UserResponse, void>({
       query: () => ({
         url: "profile",

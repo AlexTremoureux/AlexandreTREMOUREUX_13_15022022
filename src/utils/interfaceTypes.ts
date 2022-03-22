@@ -1,4 +1,3 @@
-// user profile
 export interface userProfile {
   firstName: string;
   lastName: string;

@@ -10,23 +10,32 @@ import { userProfile, UserResponse } from "../utils/interfaceTypes";
 
 const User = () => {
   const dispatch = useAppDispatch();
-  const importProfile: { isLoading: boolean; error: boolean } =
-    SetUserProfile();
+
+  // Import userProfile
+  const importProfile: { isLoading: boolean; error: boolean } = SetUserProfile();
   const { isLoading, error } = importProfile;
+
+  // Get userProfile in store Redux
   const userProfile: userProfile = useAppSelector(selectCurrentUser);
   const { firstName, lastName } = userProfile;
+
+  // State local for Edit Name Button
   const [changingProfile, setChangingProfile] = useState<Boolean>(false);
-  const [updateProfile] = useUpdateProfileMutation();
   const [nameState, setNameState] = useState<userProfile>({
     firstName: firstName,
     lastName: lastName,
   });
 
+  // Endpoint RTK Query for updating Profile
+  const [updateProfile] = useUpdateProfileMutation();
+  
+  // Update nameState onChange Input
   const handleChange = ({
     target: { name, value },
   }: React.ChangeEvent<HTMLInputElement>) =>
     setNameState((prev) => ({ ...prev, [name]: value }));
 
+  // Updating Profile Validation
   const validationUpdateProfile: () => Promise<void> = async () => {
     try {
       const data: UserResponse = await updateProfile(nameState).unwrap();

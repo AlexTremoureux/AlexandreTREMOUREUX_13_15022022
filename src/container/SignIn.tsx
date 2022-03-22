@@ -7,21 +7,31 @@ import { useLoginMutation } from "../app/services/userSlice";
 import { LoginRequest, UserResponse } from "../utils/interfaceTypes";
 
 const SignIn = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Endpoint Login of RTK Query
   const [login] = useLoginMutation();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  // RememberMe is in localStorage?
   const emailStorage:string|null = localStorage.getItem("email")
   const rememberMeStorage:string|null = localStorage.getItem("RememberMe")
   const isRememberMe:boolean = rememberMeStorage !== null
   const emailValueRecorded:string = emailStorage!==null ? emailStorage : ""
+
+  //State local
   const [error, setError] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(isRememberMe)
   const [formState, setFormState] = useState<LoginRequest>({
     email: "",
     password: "",
   });
+
+  // Update formState
   const updateCredentials = () => {
     if (emailRef.current !== null && passwordRef.current !== null) {
       const emailValue: string = emailRef.current.value;
@@ -29,6 +39,8 @@ const SignIn = () => {
       setFormState({ email: emailValue, password: passwordValue });
     }
   };
+
+  // On FormSubmit, try to Login and navigate to Profile Page
   const handleSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     const loginForm = async () => {

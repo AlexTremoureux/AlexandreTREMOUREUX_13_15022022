@@ -1,12 +1,9 @@
-import { useDispatch } from "react-redux";
-import { logged } from "../app/features/loggedSlice";
 import Feature from "../components/Feature";
+import { useAuth } from "../hooks/useAuth";
 import { features } from "../utils/constantes";
 
 const HomePage = () => {
-  const dispatch = useDispatch()
-  const isLogged = localStorage.getItem("Bearer") !== null;
-  if (isLogged) dispatch(logged(true));
+  useAuth()
   return (
     <main>
       <div className="hero">

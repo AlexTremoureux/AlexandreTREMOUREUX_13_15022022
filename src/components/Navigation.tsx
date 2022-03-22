@@ -10,9 +10,12 @@ import NavigationLink from "./NavigationLink";
 
 
 const Navigation = () => {
+
   const navigate = useNavigate()
   const dispatch = useAppDispatch();
+
   const isLogged:boolean = useAppSelector(selectLogged);
+  
   const userProfile:userProfile = useAppSelector(selectCurrentUser)
   const {firstName} = userProfile
 
