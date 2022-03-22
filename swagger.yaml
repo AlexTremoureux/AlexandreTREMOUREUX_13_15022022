@@ -67,6 +67,7 @@ paths:
       description: API for fetching a user profile
       parameters:
         - in: header
+          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -90,6 +91,7 @@ paths:
       description: API for updating a user profile
       parameters:
         - in: header
+          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -110,11 +112,10 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-
-
-
   /user/profile/{accountID}:
     get:
+      security:
+        - Bearer: []
       tags:
       - User Module
       summary: Account's transactions of the month
@@ -127,22 +128,24 @@ paths:
         name: Authorization
         description: Attach Bearer JWT
         required: true
-        schema:
-            $ref: '#/definitions/Account'
+      - name: accountID
+        in: path
+        description: ID of the account
+        required: true
+        type: string
       responses:
         '200':
           description: User profile retrieved successfully
           schema:
-            $ref: '#/definitions/AccountResponse'
+              $ref: '#/definitions/LastTransactions'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-
-
-
   /user/profile/{accountID}/{transactionID}:   
     get:
+      security:
+        - Bearer: []
       tags:
       - User Module
       summary: transaction's details
@@ -155,18 +158,21 @@ paths:
         description: Attach Bearer JWT
         type: string
         required: true
-      - in: path
-        name: TransactionId
-        description: TransactionId to fetch
+      - name: accountID
+        in: path
+        description: ID of the account
         required: true
         type: string
-        schema:
-            $ref: '#/definitions/TransactionDetails'
+      - name: transactionID
+        in: path
+        description: transactionID to fetch
+        required: true
+        type: string
       responses:
         '200':
           description: Transaction retrieved successully
           schema:
-            $ref: "#/definitions/TransactionDetailsResponse"
+            $ref: "#/definitions/TransactionsDetails"
         '400':
           description: Invalid Fields
         '500':
@@ -186,9 +192,14 @@ paths:
         description: Attach Bearer JWT
         type: string
         required: true
-      - in: path
-        name: TransactionId
-        description: TransactionId to update
+      - name: accountID
+        in: path
+        description: ID of the account
+        required: true
+        type: string
+      - name: transactionID
+        in: path
+        description: transactionID to fetch
         required: true
         type: string
       - in: body
@@ -196,12 +207,12 @@ paths:
         description: Update Transaction attributes 
         required: true
         schema:
-          $ref: "#/definitions/TransactionDetails"
+          $ref: "#/definitions/Transaction"
       responses:
         '200':
           description: Transaction edited successfully
           schema:
-            $ref: "#/definitions/TransactionDetailsResponse"
+            $ref: "#/definitions/TransactionResponse"
         "400":
           description: Invalid Fields
         "500":
@@ -264,36 +275,87 @@ definitions:
       lastName:
         type: string
 
-
-  Transactions:
+  LastTransactions:
     type: object
     properties:
       AccountID:
         type: string
-      TransactionID:
-        type: string
-      TransactionType:
-        type: string
-      Category:
-        type: string
-      Notes:
-        type: string
       body:
-        $ref: "#/definitions/Transaction"
+        $ref: "#/definitions/TransactionsDetails"
 
-  TransactionsResponse:
+  TransactionsDetails:
     type: object
     properties:
-      AccountID:
-        type: string
-      TransactionID:
-        type: string
-      TransactionType:
-        type: string
-      Category:
-        type: string
-      Notes:
-        type: string
-      body:
-        $ref: "#/definitions/Transaction"
+        transactions:
+          type: array
+          items:
+            type: object
+            properties:
+              transactionId:
+                type: number
+              date:
+                type: string
+              description:
+                type: string
+              amount:
+                type: number
+              balance:
+                type: number
+              transaction type:
+                type: string
+              category:
+                type: string
+              notes:
+                type: string
+        
+  TransactionResponse:
+      type: object
+      properties:
+        status: 
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: details successfully edited
+        schema:
+           $ref: '#/definitions/Transaction'
   
+  Transaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: transaction's ID
+          example: dbdvs561dbdb
+        date:
+          type: string
+          format: date-time
+          description: transaction's date
+          example: '2022-03-22'
+        description:
+          type: string
+          description: transaction's description
+          example: Restole16
+        amount:
+          type: integer
+          format: number
+          description: transaction's amount
+          example: 40
+        balance:
+          type: integer
+          format: number
+          description: account balance after transaction
+          example: 3210  
+        transaction type:
+          type: string
+          description: transaction's type
+          example: Electronic
+        category:
+          type: string
+          description: transaction's category
+          example: Food
+        notes:
+          type: string
+          description: transaction's notes
+          example: Restaurant le 16
+          
