@@ -1,15 +1,11 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logged } from "../app/features/loggedSlice";
-import { setToken } from "../app/features/tokenSlice";
 import { useLoginMutation } from "../app/services/userSlice";
 import { LoginRequest, UserResponse } from "../utils/interfaceTypes";
 
 const SignIn = () => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   // Endpoint Login of RTK Query
   const [login] = useLoginMutation();
@@ -46,8 +42,6 @@ const SignIn = () => {
     const loginForm = async () => {
       try {
         const data: UserResponse = await login(formState).unwrap();
-        dispatch(setToken(data.body.token));
-        dispatch(logged(true));
         if (rememberMe) {
           localStorage.setItem("email", formState.email);
           localStorage.setItem("RememberMe", "true");

@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logged } from "../app/features/loggedSlice";
 import { setToken } from "../app/features/tokenSlice";
+import { setUserProfileInformations } from "../app/features/userProfileSlice";
 import { selectCurrentUser, selectLogged } from "../app/selectors";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { userProfile } from "../utils/interfaceTypes";
@@ -23,6 +24,10 @@ const Navigation = () => {
     event.preventDefault()
     dispatch(setToken(""));
     dispatch(logged(false));
+    dispatch(setUserProfileInformations({
+      firstName: "",
+      lastName: "",
+    }))
     localStorage.removeItem('Bearer')
     navigate("/")
   };

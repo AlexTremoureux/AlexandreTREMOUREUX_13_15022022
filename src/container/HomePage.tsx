@@ -1,9 +1,13 @@
+import { Navigate } from "react-router-dom";
 import Feature from "../components/Feature";
-import { useAuth } from "../hooks/useAuth";
 import { features } from "../utils/constantes";
 
 const HomePage = () => {
-  useAuth()
+  const bearer: string | null = localStorage.getItem("Bearer")
+    const bearerInLocalStorage:boolean = bearer !== null;
+    if (bearerInLocalStorage) {
+      return <Navigate to="/profile" />;
+    }
   return (
     <main>
       <div className="hero">
