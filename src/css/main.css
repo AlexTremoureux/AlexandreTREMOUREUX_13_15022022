@@ -276,7 +276,14 @@ body {
   font-weight: bold;
   
 }
-
+button.red {
+  border-color: red;
+  color: red;
+}
+.red {
+  border-color: red;
+  color: red;
+}
 .header {
   color: #fff;
   margin-bottom: 2rem;

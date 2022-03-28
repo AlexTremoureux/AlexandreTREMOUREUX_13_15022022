@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { setUserProfileInformations } from "../app/features/userProfileSlice";
 import { selectCurrentUser } from "../app/selectors";
 import { useUpdateProfileMutation } from "../app/services/userSlice";
@@ -30,31 +30,7 @@ const User = () => {
   }: React.ChangeEvent<HTMLInputElement>) =>
     setNameState((prev) => ({ ...prev, [name]: value }));
 
-  /*const firstNameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
-  const updateNameState = () => {
-    if (firstNameRef.current !== null && lastNameRef.current !== null) {
-      const firstNameValue: string = firstNameRef.current.value;
-      const lastNameValue: string = lastNameRef.current.value;
-      setNameState({ firstName: firstNameValue, lastName: lastNameValue });
-    }
-  };
-  // Updating Profile Validation
-  const updateProfileName = () => {
-    updateNameState()
-    const validationUpdateProfile: () => Promise<void> = async () => {
-      try {
-        const data: UserResponse = await updateProfile(nameState).unwrap();
-        dispatch(setUserProfileInformations(data.body));
-        setChangingProfile(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    validationUpdateProfile()
-  }*/
-
-  const validationUpdateProfile: () => Promise<void> = async () => {
+  const validationUpdateProfile = async ():Promise<void>=> {
     try {
       const data: UserResponse = await updateProfile(nameState).unwrap();
       dispatch(setUserProfileInformations(data.body));
@@ -74,25 +50,23 @@ const User = () => {
               type="text"
               placeholder={firstName}
               name="firstName"
-              //ref={firstNameRef}
               onChange={handleChange}
             />
             <input
               type="text"
               placeholder={lastName}
               name="lastName"
-              //ref={lastNameRef}
               onChange={handleChange}
             />
           </div>
           <div className="editNameConfirmation">
             <button
               type="submit"
-              onClick={/*updateProfileName*/ validationUpdateProfile}
+              onClick={validationUpdateProfile}
             >
               Save
             </button>
-            <button
+            <button className="red"
               onClick={() => {
                 setChangingProfile(false);
               }}

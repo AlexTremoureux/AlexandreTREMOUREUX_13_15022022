@@ -16,12 +16,10 @@ const SignIn = () => {
   // RememberMe is in localStorage?
   const emailStorage:string|null = localStorage.getItem("email")
   const rememberMeStorage:string|null = localStorage.getItem("RememberMe")
-  const isRememberMe:boolean = rememberMeStorage !== null
-  const emailValueRecorded:string = emailStorage!==null ? emailStorage : ""
 
   //State local
   const [error, setError] = useState<boolean>(false);
-  const [rememberMe, setRememberMe] = useState<boolean>(isRememberMe)
+  const [rememberMe, setRememberMe] = useState<boolean>(Boolean(emailStorage))
   const [formState, setFormState] = useState<LoginRequest>({
     email: "",
     password: "",
@@ -73,7 +71,7 @@ const SignIn = () => {
               name="email"
               autoComplete="on"
               ref={emailRef}
-              defaultValue={emailValueRecorded}
+              defaultValue={emailStorage?emailStorage:""}
             />
           </div>
           <div className="input-wrapper">
@@ -90,13 +88,13 @@ const SignIn = () => {
           </div>
           {error ? (
             <div>
-              <h4>Veuillez vérifier vos identifiants de connexion</h4>
+              <h4 className="red">Veuillez vérifier vos identifiants de connexion</h4>
             </div>
           ) : (
             <div></div>
           )}
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" defaultChecked={isRememberMe} onChange={()=> setRememberMe(!rememberMe)} />
+            <input type="checkbox" id="remember-me" defaultChecked={Boolean(rememberMeStorage)} onChange={()=> setRememberMe(!rememberMe)} />
             <label htmlFor="remember-me">Remember me</label>
           </div>
           <button className="sign-in-button" onClick={updateCredentials}>
